@@ -1,10 +1,24 @@
 # Practice 02 - Fitness Club REST API
 
-REST API for Practice 02, variant 7: Fitness Club.
+REST API for Practice 02, variant 7: Fitness Club. The API uses the PostgreSQL
+database created in Practice 03 instead of Python lists.
 
-## Run
+## Start PostgreSQL
+
+Start the database from Practice 03 first:
 
 ```bash
+cd ../practice3
+docker compose up -d
+```
+
+PostgreSQL is available at `localhost:5433`; its database is `practice` and the
+default credentials are `student` / `student`.
+
+## Run FastAPI
+
+```bash
+cd ../practice02
 python3 -m pip install -r requirements.txt
 python3 -m uvicorn main:app --reload --port 8002
 ```
@@ -14,6 +28,10 @@ Open the API at <http://127.0.0.1:8002> and Swagger UI at
 
 Port `8002` keeps this work separate from DentalHelper (`8000`) and Practice 01
 (`8001`).
+
+Each FastAPI request opens a PostgreSQL connection and runs parameterized SQL.
+Creating or deleting an object through Swagger changes the same database used by
+Practice 03.
 
 ## Endpoints
 
