@@ -1,0 +1,6 @@
+services:
+  fitness-club-api:
+    build: .
+    container_name: fitness-club-api
+    ports:
+      - "8001:8000"
