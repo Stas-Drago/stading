@@ -1,12 +1,12 @@
-# Practice 01 - University API
+# Practice 01 - Fitness Club API
 
 FastAPI backend for laboratory work.
 
 ## Variant
 
-- Variant: 4
-- Theme: University
-- Entities: Student, Group
+- Variant: 7
+- Theme: Fitness Club
+- Entities: Client, Trainer
 
 ## Run
 
@@ -25,7 +25,10 @@ python3 -m uvicorn main:app --reload
 - `GET /about`
 - `GET /users`
 - `GET /info`
-- `GET /students`
-- `GET /students/{student_id}`
-- `GET /groups`
-- `GET /groups/{group_id}`
+- `GET /hello`
+- `GET /contacts`
+- `GET /status`
+- `GET /clients`
+- `GET /clients/{client_id}`
+- `GET /trainers`
+- `GET /trainers/{trainer_id}`

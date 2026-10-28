@@ -1,47 +1,42 @@
 from fastapi import FastAPI, HTTPException
 
 app = FastAPI(
-    title="University API",
-    description="Practice 01 FastAPI backend. Variant 4: University.",
+    title="Fitness Club API",
+    description="Practice 01 FastAPI backend. Variant 7: Fitness Club.",
     version="1.0.0",
 )
 
-students = [
+clients = [
     {
         "id": 1,
-        "first_name": "Alex",
-        "last_name": "Ivanov",
-        "group_id": 1,
-        "email": "alex.ivanov@university.example",
+        "name": "Alex Ivanov",
+        "membership": "Premium",
+        "trainer_id": 1,
     },
     {
         "id": 2,
-        "first_name": "Maria",
-        "last_name": "Petrova",
-        "group_id": 1,
-        "email": "maria.petrova@university.example",
+        "name": "Maria Petrova",
+        "membership": "Standard",
+        "trainer_id": 2,
     },
     {
         "id": 3,
-        "first_name": "Ivan",
-        "last_name": "Sidorov",
-        "group_id": 2,
-        "email": "ivan.sidorov@university.example",
+        "name": "Ivan Sidorov",
+        "membership": "Premium",
+        "trainer_id": 1,
     },
 ]
 
-groups = [
+trainers = [
     {
         "id": 1,
-        "name": "WEB-41",
-        "course": 4,
-        "speciality": "Web Development",
+        "name": "Elena Smirnova",
+        "specialization": "Strength training",
     },
     {
         "id": 2,
-        "name": "SE-42",
-        "course": 4,
-        "speciality": "Software Engineering",
+        "name": "Dmitry Volkov",
+        "specialization": "Fitness and cardio",
     },
 ]
 
@@ -64,38 +59,54 @@ async def users():
 @app.get("/info")
 async def info():
     return {
-        "variant": 4,
-        "theme": "University",
-        "entities": ["Student", "Group"],
+        "variant": 7,
+        "theme": "Fitness Club",
+        "entities": ["Client", "Trainer"],
     }
 
 
-@app.get("/students")
-async def get_students():
-    return {"students": students}
+@app.get("/hello")
+async def hello():
+    return {"message": "Welcome to Fitness Club"}
 
 
-@app.get("/students/{student_id}")
-async def get_student(student_id: int):
-    for student in students:
-        if student["id"] == student_id:
-            return student
-
-    raise HTTPException(status_code=404, detail="Student not found")
+@app.get("/contacts")
+async def contacts():
+    return {"phone": "+7-999-123-45-67", "email": "info@fitness-club.example"}
 
 
-@app.get("/groups")
-async def get_groups():
-    return {"groups": groups}
+
+@app.get("/status")
+async def status():
+    return {"status": "open", "message": "Fitness Club is working"}
 
 
-@app.get("/groups/{group_id}")
-async def get_group(group_id: int):
-    for group in groups:
-        if group["id"] == group_id:
-            group_students = [
-                student for student in students if student["group_id"] == group_id
+@app.get("/clients")
+async def get_clients():
+    return {"clients": clients}
+
+
+@app.get("/clients/{client_id}")
+async def get_client(client_id: int):
+    for client in clients:
+        if client["id"] == client_id:
+            return client
+
+    raise HTTPException(status_code=404, detail="Client not found")
+
+
+@app.get("/trainers")
+async def get_trainers():
+    return {"trainers": trainers}
+
+
+@app.get("/trainers/{trainer_id}")
+async def get_trainer(trainer_id: int):
+    for trainer in trainers:
+        if trainer["id"] == trainer_id:
+            trainer_clients = [
+                client for client in clients if client["trainer_id"] == trainer_id
             ]
-            return {**group, "students": group_students}
+            return {**trainer, "clients": trainer_clients}
 
-    raise HTTPException(status_code=404, detail="Group not found")
+    raise HTTPException(status_code=404, detail="Trainer not found")
